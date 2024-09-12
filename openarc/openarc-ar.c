@@ -411,9 +411,15 @@ ares_parse(u_char *hdr, struct authres *ar)
 	{
 		if (tokens[c][0] == '(')		/* comment */
 		{
-			strlcpy((char *) ar->ares_result[n - 1].result_comment,
-			        (char *) tokens[c],
-			        sizeof ar->ares_result[n - 1].result_comment);
+			if (prevstate == 5)
+			{
+				/* record at most one comment only */
+				assert(state == 6);
+				strlcpy((char *) ar->ares_result[n - 1].result_comment,
+				        (char *) tokens[c],
+				        sizeof ar->ares_result[n - 1].result_comment);
+				prevstate = state;
+			}
 			continue;
 		}
 
