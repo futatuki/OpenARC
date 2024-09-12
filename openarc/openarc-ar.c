@@ -541,7 +541,8 @@ ares_parse(u_char *hdr, struct authres *ar)
 			r = 0;
 			if (i >= MAXARESULTS)
 			{
-				return 0;
+				/* continue parsing, but don't record */
+				i = -1;
 			}
 
 			if (i >= 0) {
