@@ -772,13 +772,13 @@ main(int argc, char **argv)
 		return EX_USAGE;
 	}
 
-	c = ares_tokenize(argv[1], buf, sizeof buf, toks, NTOKENS);
+	c = ares_tokenize(((u_char **)argv)[1], buf, sizeof buf, toks, NTOKENS);
 	for (d = 0; d < c; d++)
 		printf("token %d = '%s'\n", d, toks[d]);
 
 	printf("\n");
 
-	status = ares_parse(argv[1], &ar);
+	status = ares_parse(((u_char **)argv)[1], &ar);
 	if (status == -1)
 	{
 		printf("%s: ares_parse() returned -1\n", progname);
