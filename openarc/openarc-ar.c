@@ -416,7 +416,7 @@ ares_parse(u_char *hdr, struct authres *ar)
 	{
 		if (tokens[c][0] == '(')		/* comment */
 		{
-			if (prevstate == 5)
+			if (i >= 0 && prevstate == 5)
 			{
 				/* record at most one comment only */
 				assert(state == 6);
@@ -516,14 +516,15 @@ ares_parse(u_char *hdr, struct authres *ar)
 			}
 
 			m = ares_convert(methods, (char *) tokens[c]);
-			if (m == ARES_METHOD_DKIM)
+			switch(m)
 			{
-				/* "dkim" should always added */
+			  case ARES_METHOD_UNKNOWN:
+				i = -1;
+				break;
+			  case ARES_METHOD_DKIM:
 				i = n;
 				break;
-			}
-			else
-			{
+			  default:
 				i = ares_method_seen(ar, n, m);
 				if (i == -1)
 				{
@@ -543,7 +544,9 @@ ares_parse(u_char *hdr, struct authres *ar)
 				return 0;
 			}
 
-			ar->ares_result[i].result_method = m;
+			if (i >= 0) {
+				ar->ares_result[i].result_method = m;
+			}
 			prevstate = state;
 			state = 4;
 
@@ -560,9 +563,12 @@ ares_parse(u_char *hdr, struct authres *ar)
 			break;
 
 		  case 5:				/* result */
-			ar->ares_result[i].result_result = ares_convert(aresults,
-			                                                (char *) tokens[c]);
-			ar->ares_result[i].result_comment[0] = '\0';
+			if (i >= 0)
+			{
+				ar->ares_result[i].result_result = ares_convert(aresults,
+				                                                (char *) tokens[c]);
+				ar->ares_result[i].result_comment[0] = '\0';
+			}
 			prevstate = state;
 			state = 6;
 
@@ -579,9 +585,12 @@ ares_parse(u_char *hdr, struct authres *ar)
 			break;
 
 		  case 8:
-			strlcpy((char *) ar->ares_result[i].result_reason,
-			        (char *) tokens[c],
-			        sizeof ar->ares_result[i].result_reason);
+			if (i >= 0)
+			{
+				strlcpy((char *) ar->ares_result[i].result_reason,
+				        (char *) tokens[c],
+				        sizeof ar->ares_result[i].result_reason);
+			}
 
 			prevstate = state;
 			state = 9;
@@ -625,9 +634,12 @@ ares_parse(u_char *hdr, struct authres *ar)
 			{
 				r--;
 
-				strlcat((char *) ar->ares_result[i].result_value[r],
-				        (char *) tokens[c],
-				        sizeof ar->ares_result[i].result_value[r]);
+				if (i >= 0)
+				{
+					strlcat((char *) ar->ares_result[i].result_value[r],
+					        (char *) tokens[c],
+					        sizeof ar->ares_result[i].result_value[r]);
+				}
 
 				prevstate = state;
 				state = 13;
@@ -656,7 +668,7 @@ ares_parse(u_char *hdr, struct authres *ar)
 				if (x == ARES_PTYPE_UNKNOWN)
 					return -1;
 
-				if (r < MAXPROPS)
+				if (r < MAXPROPS && i >= 0)
 				{
 					ar->ares_result[i].result_ptype[r] = x;
 				}
@@ -678,7 +690,7 @@ ares_parse(u_char *hdr, struct authres *ar)
 			break;
 
 		  case 11:				/* property */
-			if (r < MAXPROPS)
+			if (r < MAXPROPS && i >= 0)
 			{
 				strlcpy((char *) ar->ares_result[i].result_property[r],
 				        (char *) tokens[c],
@@ -703,10 +715,13 @@ ares_parse(u_char *hdr, struct authres *ar)
 		  case 13:				/* value */
 			if (r < MAXPROPS)
 			{
-				strlcat((char *) ar->ares_result[i].result_value[r],
-				        (char *) tokens[c],
-				        sizeof ar->ares_result[i].result_value[r]);
-				ar->ares_result[i].result_props = r + 1;
+				if (i >= 0)
+				{
+					strlcat((char *) ar->ares_result[i].result_value[r],
+					        (char *) tokens[c],
+					        sizeof ar->ares_result[i].result_value[r]);
+					ar->ares_result[i].result_props = r + 1;
+				}
 				r++;
 			}
 
