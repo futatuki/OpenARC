@@ -501,10 +501,18 @@ ares_parse(u_char *hdr, struct authres *ar)
 				if (n > 0)
 					n--;
 
-				prevstate = state;
-				state = 14;
-
-				continue;
+				switch (prevstate)
+				{
+				  case 0:
+				  case 1:
+				  case 2:
+					prevstate = state;
+					state = 14;
+					continue;
+				 default:
+					/* should not have other resinfo */
+					return -1;
+				}
 			}
 
 			ar->ares_result[n - 1].result_method = ares_convert(methods,
