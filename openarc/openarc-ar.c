@@ -813,8 +813,6 @@ ares_getptype(ares_ptype_t ptype)
 **  	EX_USAGE or EX_OK
 */
 
-# define NTOKENS 256
-
 int
 main(int argc, char **argv)
 {
@@ -824,8 +822,8 @@ main(int argc, char **argv)
 	char *p;
 	char *progname;
 	struct authres ar;
-	u_char buf[1024];
-	u_char *toks[NTOKENS];
+	u_char buf[ARC_MAXHEADER + 2];
+	u_char *toks[ARES_MAXTOKENS];
 
 	progname = (p = strrchr(argv[0], '/')) == NULL ? argv[0] : p + 1;
 
@@ -835,7 +833,8 @@ main(int argc, char **argv)
 		return EX_USAGE;
 	}
 
-	c = ares_tokenize(((u_char **)argv)[1], buf, sizeof buf, toks, NTOKENS);
+	c = ares_tokenize(((u_char **)argv)[1], buf, sizeof buf, toks,
+	                  ARES_MAXTOKENS);
 	for (d = 0; d < c; d++)
 		printf("token %d = '%s'\n", d, toks[d]);
 
