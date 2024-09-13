@@ -866,6 +866,7 @@ main(int argc, char **argv)
 		       ares_xconvert(aresults,
 		                     ar.ares_result[c].result_result));
 		printf("\treason \"%s\"\n", ar.ares_result[c].result_reason);
+		printf("\tcomment \"%s\"\n", ar.ares_result[c].result_comment);
 
 		for (d = 0; d < ar.ares_result[c].result_props; d++)
 		{
