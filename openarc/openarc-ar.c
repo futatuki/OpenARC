@@ -40,7 +40,7 @@
 #define	ARES_TOKENS		";=."
 #define	ARES_TOKENS2		"=."
 
-#define	ARES_MAXTOKENS		512
+#define	ARES_MAXTOKENS		1024
 
 /* tables */
 struct lookup
