@@ -3782,7 +3782,7 @@ mlfi_eom(SMFICTX *ctx)
 		                     conf->conf_keylen,
 		                     arcf_dstring_len(afc->mctx_tmpstr) > 0
 		                     ? arcf_dstring_get(afc->mctx_tmpstr)
-		                     : NULL);
+		                     : "none");
 		if (status != ARC_STAT_OK)
 		{
 			if (conf->conf_dolog)
