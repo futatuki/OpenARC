@@ -1,7 +1,7 @@
 91	reserved	changes requested
 103	reserved	even on Linux distribution based on rpms, I don't use specfile bundled in OpenARC source files (not interested in)
 116	ignored	we'll merge other PR
-117	merged	Although it is merged, it may need to review again
+117	merged	updated by PR #179
 120	ignored	PR against master, and CentOS 7 is already EOL
 121	merged
 141	merged
@@ -11,7 +11,7 @@
 158	merged
 159	merged
 160	ignored	I think the author have some missunderstanding about the code. The changed code context is construction of the AMS header and not is related to the header canonicalization.
-161	reserved	The author does not understand what he does. Even the issue really exists, we need to understand where is the point, and how it should be.
+161	ignored	The issue described here would be resolved by PR #180
 166	ignored	PR against master. Also mixture of unrelated changes
 167	merged
 168	merged
@@ -20,3 +20,6 @@
 173	reserved	It seems there can be different policies about how it should be dealt, so it might need a configuration option. 
 176	merged
 177	merged
+178	merged
+179	merged	Revise PR #117 and merged (again) with it
+180	merged
