@@ -1384,14 +1384,12 @@ arcf_config_load(struct config *data, struct arcf_config *conf,
 	int dbflags = 0;
 	uint64_t fixedtime = 0UL;
 	char *str;
-	char confstr[BUFRSZ + 1];
 	char basedir[MAXPATHLEN + 1];
 
 	assert(conf != NULL);
 	assert(err != NULL);
 
 	memset(basedir, '\0', sizeof basedir);
-	memset(confstr, '\0', sizeof confstr);
 
 	str = NULL;
 	if (data != NULL)
@@ -3813,7 +3811,7 @@ mlfi_eom(SMFICTX *ctx)
 			size_t len;
 			u_char *hfvdest;
 			u_char hfname[BUFRSZ + 1];
-			u_char hfvalue[BUFRSZ + 1];
+			u_char hfvalue[ARC_MAXHEADER + 1];
 
 			memset(hfname, '\0', sizeof hfname);
 			strlcpy(hfname, arc_hdr_name(sealhdr, &len),
