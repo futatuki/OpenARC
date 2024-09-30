@@ -15,9 +15,9 @@
 166	ignored	PR against master. Also mixture of unrelated changes
 167	merged
 168	merged
-170	reserved	Need to know how the function arc_set_cv() is used.
+170	ignored	arc_set_cv() is a setter function. This change would hide the true cause of invalid results.
 171	reserved	No good reason to merge it (not interested in)
-173	reserved	It seems there can be different policies about how it should be dealt, so it might need a configuration option. 
+173	reserved	Discussing how it should be.
 176	merged
 177	merged
 178	merged
