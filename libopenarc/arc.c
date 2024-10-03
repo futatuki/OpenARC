@@ -3129,7 +3129,8 @@ arc_set_cv(ARC_MESSAGE *msg, ARC_CHAIN cv)
 **      domain -- domain name
 **      key -- secret key, printable
 **      keylen -- key length
-**  	ar -- Authentication-Results to be enshrined
+**  	ar -- Authentication-Results to be enshrined. It can be NULL,
+** 	      which means no results.
 **
 **  Return value:
 **  	An ARC_STAT_* constant.
@@ -3272,8 +3273,12 @@ arc_getseal(ARC_MESSAGE *msg, ARC_HDRFIELD **seal, char *authservid,
 	arc_dstring_printf(dstr, "ARC-Authentication-Results:i=%u; %s",
 	                   msg->arc_nsets + 1,
 	                   msg->arc_authservid);
-	if (ar != NULL)
+	if (ar == NULL) {
+		/* no-result per RFC 8601 2.2 */
+		arc_dstring_printf(dstr, "; none");
+	} else {
 		arc_dstring_printf(dstr, "; %s", (char *) ar);
+	}
 
 	status = arc_parse_header_field(msg, arc_dstring_get(dstr),
 	                                arc_dstring_len(dstr), &h);
