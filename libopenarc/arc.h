@@ -480,7 +480,8 @@ extern void arc_set_cv __P((ARC_MESSAGE *, ARC_CHAIN));
 **  	domain -- domain name
 **  	key -- secret key
 **  	keylen -- key length
-**  	ar -- Authentication-Results to be enshrined
+**  	ar -- Authentication-Results to be enshrined. It can be NULL,
+** 	      which means no results.
 **
 **  Return value:
 **  	An ARC_STAT_* constant.

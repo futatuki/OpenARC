@@ -3070,7 +3070,8 @@ arc_set_cv(ARC_MESSAGE *msg, ARC_CHAIN cv)
 **      domain -- domain name
 **      key -- secret key, printable
 **      keylen -- key length
-**  	ar -- Authentication-Results to be enshrined
+**  	ar -- Authentication-Results to be enshrined. It can be NULL,
+** 	      which means no results.
 **
 **  Return value:
 **  	An ARC_STAT_* constant.
