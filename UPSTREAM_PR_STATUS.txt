@@ -16,10 +16,11 @@
 167	merged
 168	merged
 170	ignored	arc_set_cv() is a setter function. This change would hide the true cause of invalid results.
-171	reserved	No good reason to merge it (not interested in)
+171	closed	No good reason to merge it (not interested in)
 173	reserved	Discussing how it should be.
 176	merged
 177	merged
 178	merged
 179	merged	Revise PR #117 and merged (again) with it
 180	merged
+181	ignored	It had been fixed in develop branch
